@@ -1,0 +1,21 @@
+/* Estilos del footer */ 
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  position: fixed;
+  bottom: 0;
+  width:100%;
+}
+
+/* Estilos del ícono de copyright */
+.footer i.fa-copyright {
+  margin-left: 5px;
+}
+
+/* Estilos de hover */
+.footer a:hover {
+  color: #45a049;
+}

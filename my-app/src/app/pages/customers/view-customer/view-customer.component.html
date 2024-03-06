@@ -1,0 +1,17 @@
+<div class="container mt-50">
+    <app-table [customers]="myCustomers" [titleTable]="titleTable" (deleteCustomer)="deleteCustomer($event)" >
+    </app-table>
+    <!-- <button type="button" class="btn btn-outline-success">
+        <a href="add-customer">Add Customer</a>
+    </button> -->
+</div>
+<div class="container m-5">
+<button type="button" class="btn btn-outline-success" (click)="showAddCustomer()">
+    <!-- <a href="add-customer">Add Customer</a> -->
+    Add Customer
+</button>
+<!-- <app-add-customer (customerValue)="addCustomer($event)">
+</app-add-customer>  -->
+</div>
+<!-- @if(show){  
+} -->
