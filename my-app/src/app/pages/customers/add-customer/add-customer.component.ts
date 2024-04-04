@@ -31,7 +31,7 @@ export class AddCustomerComponent {
   addCustomer() {
     if (this.customerForm.valid) {
       this.newCustomer = {
-        id: 0,
+        _id: 0,
         name: this.customerForm.value.name || '',
         lastName: this.customerForm.value.lastName || '',
         address: this.customerForm.value.address || '',
