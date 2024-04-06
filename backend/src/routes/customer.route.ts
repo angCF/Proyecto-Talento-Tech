@@ -8,7 +8,7 @@ import validateJWT from "../middlewares/validate-jwt";
 const router = Router();
 
 router.post("/",
-    validateJWT,
+    // validateJWT,
     [
         check('name', 'Name is required').not().isEmpty(),
         check('lastName', 'Lastname is required').not().isEmpty(),

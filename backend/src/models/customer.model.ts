@@ -62,7 +62,8 @@ const CustomerSchema = new Schema<CustomerInterface>({
         default: Date.now()
     },
     interactionHistory: {
-        type: [Object]
+        type: [Object],
+        required: false
     }
 });
 

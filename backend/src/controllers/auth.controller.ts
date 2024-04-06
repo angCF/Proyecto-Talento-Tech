@@ -10,31 +10,29 @@ export const login = async (req: Request, res: Response) => {
         //Verificar login
         const userLogin = await UserModel.findOne({ login: login });
         if (!userLogin) {
-            res.status(401).json({
+            return  res.status(401).json({
                 ok: false,
                 msg: 'Invalid credentials'
             });
         }
         //Verificar password
-        console.log('Calve usuer',userLogin.password);
-        
+        console.log('Calve usuer', userLogin.password);
+
         const userPassword = bcrypt.compareSync(password, userLogin.password);
-        console.log('Calve body',userPassword);
+        console.log('Calve body', userPassword);
         if (!userPassword) {
-            res.status(401).json({
+            return  res.status(401).json({
                 ok: false,
                 msg: 'Invalid credentials'
             });
         }
         //Generar jwt
-        if (userLogin._id) {
-            const token = await generateJWT(userLogin._id, userLogin.login);
-            res.status(200).json({
-                ok: true,
-                user: userLogin,
-                token: token
-            });
-        }
+        const token = await generateJWT(userLogin._id, userLogin.login);
+        res.status(200).json({
+            ok: true,
+            user: userLogin,
+            token: token
+        }); 
     } catch (error) {
         res.status(400).json({
             ok: false,
@@ -55,9 +53,10 @@ export const recoveAccess = async (req: Request, res: Response) => {
         }
         //Generar jwt
         if (userLogin._id) {
-            const token = await generateJWT(userLogin._id, userLogin.login, '12h', process.env.JWT_SECRET_PASS);
+            const token = await generateJWT(userLogin._id, userLogin.login, '2h', process.env.JWT_SECRET_PASS);
             res.status(200).json({
                 ok: true,
+                msg: 'Success',
                 user: userLogin,
                 token: token
             });
@@ -73,13 +72,13 @@ export const resetPassword = async (req: CustomRequest, res: Response) => {
     try {
         const id = req._id;
         const { password } = req.body;
-        
+
         const salt = bcrypt.genSaltSync(10);
         const newPassword = bcrypt.hashSync(password, salt);
         console.log(newPassword);
 
-        const newUser = await UserModel.findByIdAndUpdate(id,{ password: newPassword });
-        if(!newUser){
+        const newUser = await UserModel.findByIdAndUpdate(id, { password: newPassword });
+        if (!newUser) {
             res.status(400).json({
                 ok: false,
                 msg: 'Error updating password'
@@ -90,7 +89,7 @@ export const resetPassword = async (req: CustomRequest, res: Response) => {
             message: "Password updated successfully",
             user: newUser
         });
-        
+
     } catch (err) {
         res.status(400).json({
             ok: false,
