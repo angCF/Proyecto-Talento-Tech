@@ -4,7 +4,8 @@ import { Customer } from '../../../core/interfaces/customer';
 import { TableComponent } from "../../../components/table/table.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AddCustomerComponent } from "../add-customer/add-customer.component";
-import { CustomersService } from '../../../services/customers/customers.service';
+import { CustomerService } from '../../../services/customers/customers.service';
+import { ROUTES_APP } from '../../../core/enum/routes.enum';
 
 @Component({
     selector: 'app-view-customer',
@@ -14,7 +15,6 @@ import { CustomersService } from '../../../services/customers/customers.service'
     imports: [RouterLink, TableComponent, ReactiveFormsModule, AddCustomerComponent]
 })
 export class ViewCustomerComponent implements OnInit {
-  @Input()  newCustomer: Customer = {} as Customer;
   // constructor(){}
   // show: Boolean = false;
   // customerForm = new FormGroup({
@@ -33,7 +33,7 @@ export class ViewCustomerComponent implements OnInit {
   // }
   titleTable: string = 'List of customers';
   myCustomers: Customer[] = [];
-  constructor(private router:Router, private customerService:CustomersService){
+  constructor(private router:Router, private customerService:CustomerService){
 
   }
   ngOnInit(): void {
@@ -82,8 +82,7 @@ export class ViewCustomerComponent implements OnInit {
     });
   }
   showAddCustomer(){
-    // this.show = true;
-    this.router.navigate(['/add-customer']);
+    this.router.navigateByUrl(ROUTES_APP.ADD_CUSTOMER);
   }
   deleteCustomer(idCustomer: number): void {
     this.myCustomers = this.myCustomers.filter(customer => customer._id!== idCustomer);
@@ -98,5 +97,8 @@ export class ViewCustomerComponent implements OnInit {
     this.myCustomers.push(customer);
     console.log('customer added', customer);
     console.log(this.myCustomers);
+  }
+  get ROUTES_APP(){
+    return ROUTES_APP;
   }
 }

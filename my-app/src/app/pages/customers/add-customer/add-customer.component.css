@@ -54,8 +54,9 @@ button:hover {
     font-size: 16px;
   }
 
-  button {
+  #submitForm {
     background-color: #4caf50;
+    margin: 5px;
     color: #fff;
     padding: 12px;
     border: none;
@@ -64,10 +65,10 @@ button:hover {
     font-size: 16px;
   }
 
-  button:hover {
+  #submitForm:hover {
     background-color: #45a049;
   }
-button a {
+  #submitForm a {
     text-decoration: none;
     color: #fff;
   }

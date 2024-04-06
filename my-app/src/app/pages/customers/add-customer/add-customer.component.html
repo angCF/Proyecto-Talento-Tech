@@ -1,9 +1,9 @@
 <div class="content">
-  <div class="col-12">
+  <!-- <div class="col-12">
     <button type="button" class="btn btn-primary" (click)="listCustomer()">
-      <!-- <button type="button" class="btn btn-outline-success" (click)="showAddCustomer()"></button> -->
       Return to list</button>
-  </div>
+  </div> -->
+  <h1 class="text-center">Add Customer</h1>
   <form [formGroup]="customerForm" class="row g-3" (submit)="addCustomer()">
       <div class="col-6">
         <label for="inputName4" class="form-label">Name</label>
@@ -14,6 +14,9 @@
           placeholder="First name"
           id="inputName4"
         />
+        <div class="invalid-feedback">
+          Name is required
+        </div>
       </div>
       <div class="col-6">
         <label for="inputLastname4" class="form-label">Lastname</label>
@@ -24,6 +27,9 @@
           id="inputLastname4"
           class="form-control"
         />
+        <div class="invalid-feedback">
+          LastName is required
+        </div>
       </div>
       <div class="col-6">
         <label for="inputAddress" class="form-label">Address</label>
@@ -34,6 +40,9 @@
           placeholder="1234 Main St"
           class="form-control"
         />
+        <div class="invalid-feedback">
+          Address is required
+        </div>
       </div>
       <div class="col-6">
         <label for="inputEmail4" class="form-label">Email</label>
@@ -44,10 +53,16 @@
           id="inputEmail4"
           class="form-control"
         />
+        <div class="invalid-feedback">
+          Email is required
+        </div>
       </div>
       <div class="col-md-6">
         <label for="inputPhone" class="form-label">Phone</label>
         <input type="text" formControlName="phone" id="inputPhone" class="form-control" />
+        <div class="invalid-feedback">
+          Phone is required
+        </div>
       </div>
       <div class="col-md-6">
         <label for="inputCity" class="form-label">City</label>
@@ -66,6 +81,9 @@
       <div class="col-6">
         <label for="inputIdentity" class="form-label">Document Number</label>
         <input type="text" class="form-control" id="inputIdentity" formControlName="documentNumber" />
+        <div class="invalid-feedback">
+          Document Number is required
+        </div>
       </div>
       <div class="col-12">
         <div class="form-check">
@@ -74,12 +92,12 @@
         </div>
       </div>
       <div class="col-12">
-        <button type="submit" class="btn btn-primary" [disabled]="!customerForm.valid">Submit</button>
+        <div class="form-group">
+          <button type="submit" id="submitForm" class="btn btn-success" [disabled]="!customerForm.valid">Submit</button>
+          <button type="button" class="btn btn-danger m-l-5" (click)="shoWCustomers()">Cancel</button>
+        </div>
       </div>
     </form>
-    @if(emit){
-      <app-view-customer [newCustomer]="newCustomer"></app-view-customer>  
-    }
     <p>Name: {{customerForm.value.name}}</p>
     <p>Email: {{customerForm.value.email}}</p>
     <p>Document: {{customerForm.value.documentType}}</p>

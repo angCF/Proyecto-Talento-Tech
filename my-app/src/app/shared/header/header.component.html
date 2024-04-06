@@ -4,9 +4,12 @@
     </div>
     <nav class="navbar">
         <ul>
-            <li><a routerLink="">Home</a></li>
-            <li><a routerLink="view-customer">Customers</a></li>
-            <li><a routerLink="sales">Sales</a></li>
+            <li><a [routerLink]="ROUTES_APP.HOME">Home</a></li>
+            <li><a [routerLink]="ROUTES_APP.CUSTOMERS">Customers</a></li>
+            <li><a [routerLink]="ROUTES_APP.SALES">Sales</a></li>
+            <li><a [routerLink]="ROUTES_APP.ABOUT">About</a></li>
+            <li><a [routerLink]="ROUTES_APP.CONTACT">Contact</a></li>
+            <li class="btn btn-outline-danger" (click)="logOut()"><b>Log Out</b></li>
         </ul>
     </nav>
     <div class="search-container">

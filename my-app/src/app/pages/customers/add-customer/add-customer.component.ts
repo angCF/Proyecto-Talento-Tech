@@ -1,19 +1,19 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Customer } from '../../../core/interfaces/customer';
-import { Router } from '@angular/router';
+import { Component} from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
+import {  Router, RouterLink } from '@angular/router';
 import { ViewCustomerComponent } from "../view-customer/view-customer.component";
+import { CustomerService } from '../../../services/customers/customers.service';
+import { CustomerModel } from '../../../core/models/customer.model';
+import { ROUTES_APP } from '../../../core/enum/routes.enum';
 
 @Component({
-    selector: 'app-add-customer',
-    standalone: true,
-    templateUrl: './add-customer.component.html',
-    styleUrl: './add-customer.component.css',
-    imports: [ReactiveFormsModule, ViewCustomerComponent]
+  selector: 'app-add-customer',
+  standalone: true,
+  templateUrl: './add-customer.component.html',
+  styleUrl: './add-customer.component.css',
+  imports: [ReactiveFormsModule, ViewCustomerComponent, RouterLink]
 })
 export class AddCustomerComponent {
-  constructor(private router:Router){}
-  emit: Boolean = false;
   customerForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
@@ -26,30 +26,39 @@ export class AddCustomerComponent {
     state: new FormControl('', [Validators.required])
   });
   // @Output() customerValue: EventEmitter<Customer> = new EventEmitter();
-  newCustomer: Customer = {} as Customer;
+  constructor(private customerService: CustomerService, private router:Router) { }
 
   addCustomer() {
+    const newCustomer = this.customerForm.value;
     if (this.customerForm.valid) {
-      this.newCustomer = {
-        _id: 0,
-        name: this.customerForm.value.name || '',
-        lastName: this.customerForm.value.lastName || '',
-        address: this.customerForm.value.address || '',
-        email: this.customerForm.value.email || '',
-        phone: this.customerForm.value.phone || '',
-        documentType: this.customerForm.value.documentType || '',
-        documentNumber: this.customerForm.value.documentNumber || '',
-        city: this.customerForm.value.city || '',
-        state: Boolean(this.customerForm.value.state) || false
-      };
-      this.emit = true;
-      console.log('Sending contact', this.newCustomer);
+      const data: CustomerModel = {
+        name: newCustomer.name || '',
+        lastName: newCustomer.lastName || '',
+        address: newCustomer.address || '',
+        email: newCustomer.email || '',
+        phone: newCustomer.phone || '',
+        documentType: newCustomer.documentType || '',
+        documentNumber: newCustomer.documentNumber || '',
+        city: newCustomer.city || '',
+        state: Boolean(newCustomer.state) || false
+      }
+      this.customerService.addCustomer(data).subscribe({
+        next: (res: any) => {
+          console.log('Customer created', res);
+        }, error: (error: any) => {
+          console.log('Error creating customer', error);
+        }
+      });
+      console.log('Sending contact', this.customerForm);
       // this.customerValue.emit(this.newCustomer);
       // this.listCustomer()
     }
   }
-
-  listCustomer(): void {
-    this.router.navigate(['/view-customer']);
+  get ROUTES_APP(){
+    return ROUTES_APP;
+  }
+  shoWCustomers(){
+    // this.show = true;
+    this.router.navigateByUrl(ROUTES_APP.CUSTOMERS);
   }
 }
